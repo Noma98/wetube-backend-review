@@ -4,7 +4,7 @@
   "description": "Backend Review",
   "main": "index.js",
   "scripts": {
-    "dev": "node src/index.js"
+    "dev": "node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Noma98/wetube-backend-review/issues"
   },
-  "homepage": "https://github.com/Noma98/wetube-backend-review#readme"
+  "homepage": "https://github.com/Noma98/wetube-backend-review#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
