@@ -1,0 +1,19 @@
+{
+  "name": "wetube",
+  "version": "1.0.0",
+  "description": "Backend Review",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noma98/wetube-backend-review.git"
+  },
+  "author": "Noma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Noma98/wetube-backend-review/issues"
+  },
+  "homepage": "https://github.com/Noma98/wetube-backend-review#readme"
+}
