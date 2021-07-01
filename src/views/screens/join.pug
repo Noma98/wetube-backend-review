@@ -1,7 +1,9 @@
 extend ../base 
 block content 
     H1 Join 
+    if error 
+        p=error 
     form(method="POST")
-        input(name="id",type="text",placeholder="ID")
-        input(name="pwd",type="password",placeholder="PWD")
+        input(name="userId",type="text",placeholder="ID",required)
+        input(name="pwd",type="password",placeholder="PWD",required)
         input(type="submit", value="Send")
