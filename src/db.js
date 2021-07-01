@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
-mongoose.connect('mongodb://127.0.0.1:27017/review');
+mongoose.connect('mongodb://127.0.0.1:27017/review', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 const db = mongoose.connection;
 
 const handleError = (err) => console.log("DB Error", err);
