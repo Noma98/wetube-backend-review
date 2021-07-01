@@ -1,9 +1,10 @@
+import "./db"; //import되는 순간 db.js가 자동으로 실행되며, mongodb와 연결된다.
+import "./models/User";
 import express from "express";
 import morgan from "morgan";
 import rootRouter from './routers/rootRouter';
 import userRouter from './routers/userRouter';
 import videoRouter from './routers/videoRouter';
-import "./db"; //import되는 순간 db.js가 자동으로 실행되며, mongodb와 연결된다.
 const PORT = 4000;
 
 const app = express();
