@@ -1,3 +1,4 @@
+import "dotenv/config";
 import "./db"; //import되는 순간 db.js가 자동으로 실행되며, mongodb와 연결된다.
 import "./models/User";
 import app from "./server";

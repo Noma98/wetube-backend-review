@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-mongoose.set('useCreateIndex', true); //Warning 처리
-mongoose.connect('mongodb://127.0.0.1:27017/review', {
+mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true,
 });
 const db = mongoose.connection;
 
