@@ -25,6 +25,8 @@ export const postLogin = async (req, res) => {
     if (!pwdCheck) {
         return res.status(400).render("screens/login", { error: "비밀번호가 틀립니다." });
     }
+    req.session.loggedIn = true;
+    req.session.user = findUser;
     return res.redirect("/");
 };
 
