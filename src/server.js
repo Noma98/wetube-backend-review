@@ -5,6 +5,7 @@ import userRouter from './routers/userRouter';
 import videoRouter from './routers/videoRouter';
 import session from 'express-session';
 import { localsMiddleware } from './middlewares';
+import MongoStore from 'connect-mongo';
 
 const app = express();
 const loggerMiddleware = morgan('dev');
@@ -15,8 +16,9 @@ app.use(loggerMiddleware);
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: 'asdlfkja1123o98as7fdakj1',
-    resave: true,
-    saveUninitialized: true,
+    resave: false,//don't save session if unmodified
+    saveUninitialized: false,// don't create session until something stored
+    store: MongoStore.create({ mongoUrl: 'mongodb://127.0.0.1:27017/review' })
 }))
 
 app.use(localsMiddleware);
