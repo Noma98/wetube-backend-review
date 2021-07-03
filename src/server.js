@@ -12,6 +12,7 @@ const loggerMiddleware = morgan('dev');
 
 app.set("view engine", "pug");
 app.set("views", `${process.cwd()}/src/views`);
+
 app.use(loggerMiddleware);
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
@@ -20,11 +21,12 @@ app.use(session({
     saveUninitialized: false,// don't create session until something stored
     store: MongoStore.create({ mongoUrl: process.env.DB_URL })
 }))
-
 app.use(localsMiddleware);
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
+
+app.use("/public", express.static("public"));
 
 export default app;
 
