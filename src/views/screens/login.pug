@@ -4,6 +4,10 @@ block content
         p=error
     h1 Login
     form(method="POST")
-        input(name="idOrEmail",type="text",placeholder="ID or EMAIL")
+        input(name="idOrEmail",type="text",placeholder="ID or EMAIL",style="text-transform: lowercase")
         input(name="pwd",type="password",placeholder="PASSWORD")
         input(type="submit",value="Login") 
+    button 
+        a(href="/users/github/start") Github로 시작하기
+    button 
+        a(href="/join") 회원가입  

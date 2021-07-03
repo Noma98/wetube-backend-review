@@ -1,5 +1,9 @@
 header
-    if loggedIn 
+    if loggedIn
+        if loggedInUser.avatarUrl 
+            img(src=loggedInUser.avatarUrl) 
+        else 
+            span 👩‍🦰
         p 안녕하세요, #{loggedInUser.name}님!😁
     nav 
         ul 

@@ -1,28 +1,10 @@
 import User from '../models/User';
 import bcrypt from 'bcrypt';
+import fetch from "node-fetch";
 
 export const getJoin = (req, res) => res.render("screens/join", { pageTitle: "Join" });
 export const postJoin = async (req, res) => {
-    const { userId, email, pwd, pwd2, name } = req.body;
-    const pageTitle = "Join";
-    const idExists = await User.exists({ userId });
-    if (idExists) {
-        return res.status(400).render("screens/join", { error: "이미 존재하는 아이디입니다.", pageTitle });
-    }
-    const emailExists = await User.exists({ email });
-    if (emailExists) {
-        return res.status(400).render("screens/join", { error: "이미 사용중인 이메일입니다.", pageTitle });
-    }
-    if (pwd !== pwd2) {
-        return res.status(400).render("screens/join", { error: "비밀번호를 동일하게 입력해주세요.", pageTitle });
-    }
-    await User.create({
-        userId,
-        name,
-        email,
-        pwd,
-    });
-    res.status(201).redirect("/login");
+    handleJoin(req, res, "screens/join");
 }
 export const getLogin = (req, res) => res.render("screens/login", { pageTitle: "Login" });
 export const postLogin = async (req, res) => {
@@ -43,6 +25,105 @@ export const postLogin = async (req, res) => {
 export const logout = (req, res) => {
     req.session.destroy();
     return res.status(200).redirect("/");
+}
+
+export const github = (req, res) => {
+    const baseUrl = "https://github.com/login/oauth/authorize";
+    const config = {
+        client_id: process.env.GH_CLIENT,
+        scope: "read:user user:email"
+    };
+    const configUrl = new URLSearchParams(config).toString();
+    const finalUrl = baseUrl + "?" + configUrl;
+    res.redirect(finalUrl);
+}
+export const getGithubLogin = async (req, res) => {
+    const baseUrl = "https://github.com/login/oauth/access_token";
+    const config = {
+        client_id: process.env.GH_CLIENT,
+        client_secret: process.env.GH_SECRET,
+        code: req.query.code,
+    };
+    const configUrl = new URLSearchParams(config).toString();
+    const finalUrl = baseUrl + "?" + configUrl;
+
+    const tokenRequest = await (await fetch(finalUrl, {
+        method: "POST",
+        headers: {
+            Accept: "application/json"
+        }
+    })).json();
+    if (!("access_token" in tokenRequest)) {
+        return res.redirect("login", { pageTitle: "Login", error: "⛔ 엑세스 토큰이 없습니다. 다시 시도해 보세요.:)" })
+    }
+    const { access_token } = tokenRequest;
+    const apiUrl = 'https://api.github.com';
+    const userData = await (
+        await fetch(`${apiUrl}/user`, {
+            method: "GET",
+            headers: {
+                Authorization: `token ${access_token}`
+            },
+        })
+    ).json();
+    const emailData = await (
+        await fetch(`${apiUrl}/user/emails`, {
+            method: "GET",
+            headers: {
+                Authorization: `token ${access_token}`
+            }
+        })
+    ).json();
+    const { login: userId, name, avatar_url: avatarUrl } = userData;
+    const email = emailData.find(x => x.primary && x.verified).email;
+
+    const user = await User.findOne({ email });
+
+    //이미 해당 이메일로 소셜가입 혹은 기본가입한 사람 -> 로그인 진행
+    if (user) {
+        req.session.loggedIn = true;
+        req.session.user = user;
+        return res.redirect("/");
+    }
+    //해당 이메일 존재X -> 소셜 가입 진행
+    if (!user) {
+        req.session.data = { email, userId, name, avatarUrl };
+        return res.redirect("/join/social");
+    }
+}
+export const getSocialJoin = (req, res) => {
+    const { email, userId, name, avatarUrl } = req.session.data;
+    req.session.destroy();
+    return res.render("screens/socialJoin", { email, userId, name, social: "Github", avatarUrl });
+}
+export const postSocialJoin = (req, res) => {
+    handleJoin(req, res, "screens/socialJoin");
+}
+
+const handleJoin = async (req, res, redirectUrl) => {
+    let { userId, email, pwd, pwd2, name, avatarUrl } = req.body;
+    userId = userId.toLowerCase();
+    email = email.toLowerCase();
+    const pageTitle = "Join";
+    const idExists = await User.exists({ userId });
+    if (idExists) {
+        return res.status(400).render(redirectUrl, { error: "이미 존재하는 아이디입니다.", pageTitle, email, name, avatarUrl });
+    }
+    const emailExists = await User.exists({ email });
+    if (emailExists) {
+        return res.status(400).render(redirectUrl, { error: "이미 사용중인 이메일입니다.", pageTitle, userId, name, avatarUrl });
+    }
+    if (pwd !== pwd2) {
+        return res.status(400).render(redirectUrl, { error: "비밀번호가 동일하지 않습니다.", pageTitle, email, avatarUrl, name, userId });
+    }
+    await User.create({
+        userId,
+        name,
+        email,
+        pwd,
+        avatarUrl
+    });
+    res.status(201).redirect("/login");
 }
 export const edit = (req, res) => res.send("Edit User");
 export const remove = (req, res) => res.send("Remove User");

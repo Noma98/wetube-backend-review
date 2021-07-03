@@ -1,0 +1,13 @@
+extend ../base 
+block content 
+    H1 Join with #{social}
+    if error 
+        p=error 
+    form(method="POST")
+        input(name="userId",type="text",placeholder="ID",required,value=userId,style="text-transform: lowercase")
+        input(name="email", type="email", placeholder="Email",required,value=email,readonly,style="text-transform: lowercase")
+        input(name="name",type="text",placeholder="Name",required,value=name)
+        input(name="pwd",type="password",placeholder="PWD",required)
+        input(name="pwd2",type="password",placeholder="PWD Confirm",required)
+        input(name="avatarUrl",type="text",value=avatarUrl,readonly)
+        input(type="submit", value="Join")
