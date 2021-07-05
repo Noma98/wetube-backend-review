@@ -1,12 +1,6 @@
 header
-    if loggedIn
-        if loggedInUser.avatarUrl 
-            img(src=loggedInUser.avatarUrl) 
-        else 
-            img(src="/public/images/default.PNG")
-        p 안녕하세요, #{loggedInUser.name}님!😁
     nav 
-        ul 
+        ul.menu 
             li 
                 a(href="/") home 
             if !loggedIn
@@ -17,3 +11,8 @@ header
             else 
                 li 
                     a(href="/logout") Logout
+    if loggedIn
+        div.userbox
+            a(href=`/users/${loggedInUser.userId}`)
+                img(src=loggedInUser.avatarUrl).avatar
+            p=loggedInUser.name

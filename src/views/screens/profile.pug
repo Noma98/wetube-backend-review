@@ -1,0 +1,10 @@
+extend ../base
+block content 
+    h1 #{user.name}'s Profile
+    p User ID: #{user.userId} 
+    p Name : #{user.name}
+
+    img(src=user.avatarUrl).profile__img
+    if loggedInUser._id==user._id 
+        a(href=`/users/${user.userId}/edit`) Edit Account
+    

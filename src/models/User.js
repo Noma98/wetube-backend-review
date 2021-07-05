@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     userId: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
-    avatarUrl: { type: String, default: "" },
+    avatarUrl: { type: String, default: "/public/images/default.PNG" },
     pwd: { type: String, required: true }
 })
 userSchema.pre("save", async function () {

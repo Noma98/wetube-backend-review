@@ -1,0 +1,22 @@
+header{
+    display: flex;
+    align-items: center;
+    .menu{
+        display: flex;
+        *{
+            margin-right: 0.5em;
+        }
+    }
+    .userbox{
+        display: flex;
+        align-items: center;
+        *{
+            margin-left: 0.5em;
+        }
+    }
+    .avatar{
+        width:2.5rem;
+        height:2.5rem;
+        border-radius: 50%;
+    }
+}

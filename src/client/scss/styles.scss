@@ -1,5 +1,17 @@
-img{
-    width:2.5rem;
-    height:2.5rem;
-    border-radius: 50%;
+//Config 
+
+// Components
+@import "./components/header.scss";
+
+// Screens
+@import "./screens/profile.scss";
+
+// Defaults
+*{
+    text-decoration: none;
+    box-sizing: border-box;
+}
+ul{
+    list-style: none;
+    padding:0;
 }

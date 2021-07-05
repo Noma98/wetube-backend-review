@@ -125,6 +125,13 @@ const handleJoin = async (req, res, redirectUrl) => {
     });
     res.status(201).redirect("/login");
 }
+export const profile = async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findOne({ userId: id });
+    if (!user) {
+        return res.render("screens/404", { pageTitle: "Profile" });
+    }
+    return res.render("screens/profile", { pageTitle: `${user.name}'s Profile`, user });
+};
+
 export const edit = (req, res) => res.send("Edit User");
-export const remove = (req, res) => res.send("Remove User");
-export const see = (req, res) => res.send("See User");
