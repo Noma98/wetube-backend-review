@@ -2,8 +2,12 @@ doctype html
 html(lang="ko")
     head 
         title #{siteTitle} | #{pageTitle}
-        block script
+        script(src="/assets/js/main.js",defer)
+        link(rel="stylesheet", href="/assets/css/styles.css")
+        block scripts
+
     body   
         include partials/header
         main
             block content 
+    
