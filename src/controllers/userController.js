@@ -134,4 +134,19 @@ export const profile = async (req, res) => {
     return res.render("screens/profile", { pageTitle: `${user.name}'s Profile`, user });
 };
 
-export const edit = (req, res) => res.send("Edit User");
+export const getEdit = (req, res) => res.render("screens/edit");
+export const postEdit = async (req, res) => {
+    const {
+        params: {
+            id: userId
+        },
+        file: {
+            path
+        }
+    } = req;
+    const user = await User.findOne({ userId });
+    user.avatarUrl = "/" + path;
+    await user.save();
+    req.session.user = user;
+    return res.redirect(`/users/${userId}`);
+}

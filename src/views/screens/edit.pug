@@ -1,0 +1,11 @@
+extend ../base
+block content 
+    h1 Edit Account  
+    img(src=loggedInUser.avatarUrl)
+    form(method="POST",enctype="multipart/form-data")
+        label(for="avatarUrl") Profile Image : 
+        input(name="avatarUrl",type="file",accept="image/*")
+        br
+        input(type="submit",value="Edit")
+block scripts 
+    script(src="/assets/js/edit.js", defer) 

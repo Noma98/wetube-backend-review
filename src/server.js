@@ -28,6 +28,7 @@ app.use("/videos", videoRouter);
 
 app.use("/public", express.static("public"));
 app.use("/assets", express.static("assets"));
+app.use("/uploads", express.static("uploads"));
 
 export default app;
 

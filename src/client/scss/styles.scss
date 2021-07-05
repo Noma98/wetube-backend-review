@@ -1,4 +1,5 @@
 //Config 
+@import "./config/_variables.scss";
 
 // Components
 @import "./components/header.scss";
@@ -13,5 +14,16 @@
 }
 ul{
     list-style: none;
-    padding:0;
+    padding: 0;
+}
+input{
+    border-style: none;
+    outline-color: $blue;
+    padding: 0.5em;
+}
+input[type="submit"],button{
+    padding: 1em 2em;
+    cursor: pointer;
+    background-color: $blue;
+    border-radius: 0.5em;
 }
