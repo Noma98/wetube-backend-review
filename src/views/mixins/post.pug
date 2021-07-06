@@ -1,0 +1,14 @@
+mixin post(info)
+    div.post
+        div.post__content 
+            h3=info.title 
+            small 작성자 : #{info.owner.name}
+            br
+            small #{info.createdAt.getFullYear()}년 #{info.createdAt.getMonth()}월 #{info.createdAt.getDay()}일
+            small  👁 #{info.views}
+            br 
+            if info.mimetype.includes("video")
+                video(src=info.fileUrl)
+            else 
+                img(src=info.fileUrl)
+        

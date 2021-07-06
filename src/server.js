@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import rootRouter from './routers/rootRouter';
 import userRouter from './routers/userRouter';
-import videoRouter from './routers/videoRouter';
+import postRouter from './routers/postRouter';
 import session from 'express-session';
 import { localsMiddleware } from './middlewares';
 import MongoStore from 'connect-mongo';
@@ -24,7 +24,7 @@ app.use(session({
 app.use(localsMiddleware);
 app.use("/", rootRouter);
 app.use("/users", userRouter);
-app.use("/videos", videoRouter);
+app.use("/posts", postRouter);
 
 app.use("/public", express.static("public"));
 app.use("/assets", express.static("assets"));

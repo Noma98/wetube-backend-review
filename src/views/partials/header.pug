@@ -1,8 +1,8 @@
 header
+    h2.logo 
+        a(href="/") nomasta
     nav 
         ul.menu 
-            li 
-                a(href="/") home 
             if !loggedIn
                 li 
                     a(href="/login") Login
@@ -11,8 +11,10 @@ header
             else 
                 li 
                     a(href="/logout") Logout
-    if loggedIn
-        div.userbox
-            a(href=`/users/${loggedInUser.userId}`)
-                img(src=loggedInUser.avatarUrl).avatar
-            p=loggedInUser.name
+                li 
+                    a(href="/posts/upload") Upload 
+        if loggedIn
+            div.userbox
+                a(href=`/users/${loggedInUser.userId}`)
+                    img(src=loggedInUser.avatarUrl).avatar
+                p=loggedInUser.name

@@ -1,6 +1,8 @@
 extends ../base
-include ../mixins/video
+include ../mixins/post
 block content 
-    h1=message
-    each video in videos
-        +video(video)
+    div.postContainer 
+        each post in postings
+            +post(post)
+        else 
+            h3 ❗ 업로드된 포스팅이 없습니다.
