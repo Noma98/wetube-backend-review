@@ -1,5 +1,5 @@
 mixin post(info)
-    div.post
+    a(href=`/posts/${String(info._id)}`).post
         div.post__content 
             h3=info.title 
             small 작성자 : #{info.owner.name}

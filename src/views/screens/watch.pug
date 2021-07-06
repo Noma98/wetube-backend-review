@@ -1,0 +1,15 @@
+extend ../base 
+block content 
+    div.posting__container
+        h2=posting.title 
+        div.posting__meta
+            small 작성자 : #{posting.owner.name}
+            small   #{posting.createdAt.getFullYear()}년 #{posting.createdAt.getMonth()}월 #{posting.createdAt.getDay()}일
+            small#views    👁 #{posting.views}
+        if posting.mimetype.includes("video")
+            video(src=posting.fileUrl,controls,data-id=posting._id,autoplay=true)#postingFile.posting__file
+        else 
+            img(src=posting.fileUrl,data-id=posting._id)#postingFile
+
+block scripts 
+    script(src="/assets/js/watch.js",defer) 

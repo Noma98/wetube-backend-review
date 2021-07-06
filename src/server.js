@@ -6,6 +6,7 @@ import postRouter from './routers/postRouter';
 import session from 'express-session';
 import { localsMiddleware } from './middlewares';
 import MongoStore from 'connect-mongo';
+import apiRouter from './routers/apiRouter';
 
 const app = express();
 const loggerMiddleware = morgan('dev');
@@ -25,6 +26,7 @@ app.use(localsMiddleware);
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
+app.use("/api", apiRouter);
 
 app.use("/public", express.static("public"));
 app.use("/assets", express.static("assets"));

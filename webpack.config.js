@@ -5,6 +5,8 @@ const BASE_JS = "./src/client/js/";
 module.exports = {
     entry: {
         main: BASE_JS + "main.js",
+        home: BASE_JS + "home.js",
+        watch: BASE_JS + "watch.js",
     },
     output: {
         filename: "js/[name].js",

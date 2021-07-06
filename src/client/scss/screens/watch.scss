@@ -1,0 +1,16 @@
+.posting__container{
+    display: flex;
+    flex-direction: column;
+    .posting__meta{
+        display: flex;
+        padding: 0.5em 0;
+        small{
+            margin-right: 1em;
+        }
+    }
+    .posting__file{
+        width: 22rem;
+        height: 20rem;
+        object-fit: cover;
+    }
+}

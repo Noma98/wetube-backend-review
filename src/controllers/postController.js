@@ -4,7 +4,14 @@ export const home = async (req, res) => {
     const postings = await Posting.find({}).populate("owner");
     return res.render("screens/home", { pageTitle: "Home", postings })
 };
-export const see = (req, res) => res.send("Watch");
+export const see = async (req, res) => {
+    const { id } = req.params;
+    const posting = await Posting.findById(id).populate("owner");
+    if (!posting) {
+        return res.render("screens/404", { pageTitle: "Error" });
+    }
+    return res.render("screens/watch", { pageTitle: posting.title, posting });
+}
 export const edit = (req, res) => res.send("Edit");
 export const search = (req, res) => res.send("Search");
 export const getUpload = (req, res) => res.render("screens/upload", { pageTitle: "Upload" });
@@ -25,3 +32,14 @@ export const postUpload = async (req, res) => {
     return res.redirect("/");
 }
 export const deleteVideo = (req, res) => res.send("Delete Video");
+
+export const addView = async (req, res) => {
+    const { id } = req.params;
+    const posting = await Posting.findById(id);
+    if (!posting) {
+        return res.sendStatus(404);
+    }
+    posting.views += 1;
+    await posting.save();
+    return res.sendStatus(200);
+}
