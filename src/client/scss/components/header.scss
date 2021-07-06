@@ -1,6 +1,11 @@
 header{
+    padding: 0 2em;
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    nav{
+        display: flex;
+    }
     .menu{
         display: flex;
         *{

@@ -1,0 +1,13 @@
+.post{
+    display: inline-block;
+    cursor: pointer;
+    background-color: rgb(105, 105, 105);
+    border-radius: 0.5em;
+    padding: 1em;
+    img,video{
+        width:10rem;
+        height:10rem;
+        margin-top: 0.5em;
+        object-fit:cover;
+    }
+}

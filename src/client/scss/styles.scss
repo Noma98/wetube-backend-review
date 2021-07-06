@@ -3,9 +3,11 @@
 
 // Components
 @import "./components/header.scss";
+@import "./components/post.scss";
 
 // Screens
 @import "./screens/profile.scss";
+@import "./screens/home.scss";
 
 // Defaults
 *{
@@ -26,4 +28,14 @@ input[type="submit"],button{
     cursor: pointer;
     background-color: $blue;
     border-radius: 0.5em;
+}
+body{
+    background-color: $bg;
+    color: whitesmoke;
+}
+a{
+    color: whitesmoke;
+}
+h1,h2,h3{
+    margin: 0;
 }
