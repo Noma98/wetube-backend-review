@@ -1,3 +1,4 @@
+include mixins/message   
 doctype html 
 html(lang="ko")
     head 
@@ -6,8 +7,11 @@ html(lang="ko")
         link(rel="stylesheet", href="/assets/css/styles.css")
         block scripts
 
-    body   
+    body
+        if messages.info
+            +message(messages.info)
+        if messages.error 
+            +message(messages.error)
         include partials/header
         main
             block content 
-    

@@ -12,14 +12,17 @@ export const postLogin = async (req, res) => {
     const { idOrEmail, pwd } = req.body;
     const findUser = await User.findOne({ $or: [{ userId: idOrEmail }, { email: idOrEmail }] });
     if (!findUser) {
-        return res.status(400).render("screens/login", { error: "존재하지 않는 Id혹은 Email입니다.", pageTitle });
+        req.flash("error", "존재하지 않는 Id 혹은 Email입니다.");
+        return res.status(400).render("screens/login", { pageTitle });
     }
     const pwdCheck = await bcrypt.compare(pwd, findUser.pwd);
     if (!pwdCheck) {
-        return res.status(400).render("screens/login", { error: "비밀번호가 틀립니다.", pageTitle });
+        req.flash("error", "비밀번호가 틀립니다.");
+        return res.status(400).render("screens/login", { pageTitle });
     }
     req.session.loggedIn = true;
     req.session.user = findUser;
+    req.flash("info", `Welcome, ${findUser.name}!😊`);
     return res.status(200).redirect("/");
 };
 export const logout = (req, res) => {
@@ -54,7 +57,8 @@ export const getGithubLogin = async (req, res) => {
         }
     })).json();
     if (!("access_token" in tokenRequest)) {
-        return res.redirect("login", { pageTitle: "Login", error: "⛔ 엑세스 토큰이 없습니다. 다시 시도해 보세요.:)" })
+        req.flash("error", "⛔ 엑세스 토큰이 없습니다. 다시 시도해 보세요.:)");
+        return res.redirect("login", { pageTitle: "Login" })
     }
     const { access_token } = tokenRequest;
     const apiUrl = 'https://api.github.com';
@@ -83,6 +87,7 @@ export const getGithubLogin = async (req, res) => {
     if (user) {
         req.session.loggedIn = true;
         req.session.user = user;
+        req.flash("info", `Welcome, ${user.name}!😊`);
         return res.redirect("/");
     }
     //해당 이메일 존재X -> 소셜 가입 진행
@@ -107,14 +112,17 @@ const handleJoin = async (req, res, redirectUrl) => {
     const pageTitle = "Join";
     const idExists = await User.exists({ userId });
     if (idExists) {
-        return res.status(400).render(redirectUrl, { error: "이미 존재하는 아이디입니다.", pageTitle, email, name, avatarUrl });
+        req.flash("error", "이미 존재하는 아이디입니다.");
+        return res.status(400).render(redirectUrl, { pageTitle, email, name, avatarUrl });
     }
     const emailExists = await User.exists({ email });
     if (emailExists) {
-        return res.status(400).render(redirectUrl, { error: "이미 사용중인 이메일입니다.", pageTitle, userId, name, avatarUrl });
+        req.flash("error", "이미 사용중인 이메일입니다.");
+        return res.status(400).render(redirectUrl, { pageTitle, userId, name, avatarUrl });
     }
     if (pwd !== pwd2) {
-        return res.status(400).render(redirectUrl, { error: "비밀번호가 동일하지 않습니다.", pageTitle, email, avatarUrl, name, userId });
+        req.flash("error", "비밀번호가 동일하지 않습니다.");
+        return res.status(400).render(redirectUrl, { pageTitle, email, avatarUrl, name, userId });
     }
     await User.create({
         userId,

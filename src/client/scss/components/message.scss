@@ -1,0 +1,19 @@
+.message{
+    background-color: $blue;
+    text-align: center;
+    width:100%;
+    padding: 1em;
+    position: absolute;
+    top:0;
+    z-index: 2;
+    animation: 1s ease-in 2s forwards goaway;
+}
+@keyframes goaway{
+    from{
+        transform: none;
+    }
+    to{
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}

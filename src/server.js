@@ -7,6 +7,7 @@ import session from 'express-session';
 import { localsMiddleware } from './middlewares';
 import MongoStore from 'connect-mongo';
 import apiRouter from './routers/apiRouter';
+import flash from 'express-flash';
 
 const app = express();
 const loggerMiddleware = morgan('dev');
@@ -23,6 +24,8 @@ app.use(session({
     store: MongoStore.create({ mongoUrl: process.env.DB_URL })
 }))
 app.use(localsMiddleware);
+app.use(flash());
+
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/posts", postRouter);

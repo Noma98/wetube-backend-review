@@ -1,8 +1,6 @@
 extend ../base 
 block content 
     H1 Join 
-    if error 
-        p=error 
     form(method="POST")
         input(name="userId",type="text",placeholder="ID",required,style="text-transform: lowercase",value=userId)
         input(name="email",type="email",placeholder="Email",required,style="text-transform: lowercase",value=email)
