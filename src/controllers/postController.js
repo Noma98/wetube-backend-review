@@ -12,8 +12,6 @@ export const see = async (req, res) => {
     }
     return res.render("screens/watch", { pageTitle: posting.title, posting });
 }
-export const edit = (req, res) => res.send("Edit");
-export const search = (req, res) => res.send("Search");
 export const getUpload = (req, res) => res.render("screens/upload", { pageTitle: "Upload" });
 
 export const postUpload = async (req, res) => {
@@ -31,7 +29,6 @@ export const postUpload = async (req, res) => {
     });
     return res.redirect("/");
 }
-export const deleteVideo = (req, res) => res.send("Delete Video");
 
 export const addView = async (req, res) => {
     const { id } = req.params;

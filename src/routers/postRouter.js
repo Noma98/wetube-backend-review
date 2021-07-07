@@ -1,12 +1,11 @@
 import express from "express";
-import { see, edit, getUpload, postUpload, deleteVideo } from "../controllers/postController";
+import { see, getUpload, postUpload } from "../controllers/postController";
 import multer from "multer";
+import { loggedInOnlyMiddleware } from '../middlewares';
 const upload = multer({ dest: "uploads/posts/" });
-const videoRouter = express.Router();
+const postRouter = express.Router();
 
-videoRouter.route("/upload").get(getUpload).post(upload.single("fileUrl"), postUpload);
-videoRouter.get("/:id", see);
-videoRouter.get("/:id/edit", edit);
-videoRouter.get("/:id/delete", deleteVideo);
+postRouter.route("/upload").get(loggedInOnlyMiddleware, getUpload).post(upload.single("fileUrl"), postUpload);
+postRouter.get("/:id", see);
 
-export default videoRouter;
+export default postRouter;
